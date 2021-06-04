@@ -5,10 +5,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ChatRoomGUI extends JFrame {
-    private final String WINDOWS_TITLE = "AUT Chat Room";
-    private final int WIDTH = 500, HEIGHT = 500;
-    private final int X = 850, Y = 470;
-    private ArrayList<String> users = new ArrayList<>();
+    private final ArrayList<String> users = new ArrayList<>();
     ParticipantsArea participantsArea = new ParticipantsArea();
     MessageArea messageArea = new MessageArea();
     ChatArea chatBox = new ChatArea();
@@ -16,18 +13,21 @@ public class ChatRoomGUI extends JFrame {
     public ChatRoomGUI() {
         super();
         this.setFont(new Font("serif", Font.PLAIN, 40));
+        String WINDOWS_TITLE = "AUT Chat Room";
         this.setTitle(WINDOWS_TITLE);
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        int HEIGHT = 500;
+        int WIDTH = 500;
         this.setSize(WIDTH, HEIGHT);
-        this.setLocation(X, Y);
+        int x = 850;
+        int y = 470;
+        this.setLocation(x, y);
         this.add(new JScrollPane(chatBox), BorderLayout.CENTER);
         this.add(participantsArea, BorderLayout.WEST);
         this.add(messageArea, BorderLayout.SOUTH);
         this.pack();
         this.setVisible(true);
-
-        //chatBox.addComponentsToPane(chatBox);
     }
 
     public ChatArea getChatBox() {
@@ -48,17 +48,12 @@ public class ChatRoomGUI extends JFrame {
     }
 
     public void removePart(String user) {
-        try
-        {
+        try {
             users.remove(user);
             participantsArea.getModel().removeElement(user);
             participantsArea.decCount();
-            System.out.println("user "+user+" has left");
-        } catch (Exception e)
-        {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
-
 }

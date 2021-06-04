@@ -2,7 +2,6 @@ package server;
 
 import model.*;
 
-import java.io.EOFException;
 import java.io.IOException;
 
 public class ClientHandler implements Runnable {

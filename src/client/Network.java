@@ -60,10 +60,10 @@ public class Network implements Runnable {
                         mainGUI.addNewPart(user);
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+
+                return;
             }
         }
     }

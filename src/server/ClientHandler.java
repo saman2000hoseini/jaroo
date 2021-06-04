@@ -42,9 +42,7 @@ public class ClientHandler implements Runnable {
     private synchronized void handleMessage(Message message, Client client) throws IOException {
         if (message.getReceiver().equals("all")) {
             sendToAllUsers(message);
-        } else if (Server.clientsByID.containsKey(message.getReceiver())) {
-            Server.clientsByID.get(message.getReceiver()).getObjectOutputStream().writeObject(message);
-        } else {
+        } else if (!sendToUser(message.getReceiver(), message)) {
             Message msg = new Message(Server.name, client.getUsername(), userNotFound(message.getReceiver()));
             client.getObjectOutputStream().writeObject(msg);
         }
@@ -64,6 +62,15 @@ public class ClientHandler implements Runnable {
         for (Client c : Server.clientsByID.values()) {
             c.getObjectOutputStream().writeObject(request);
         }
+    }
+
+    private synchronized boolean sendToUser(String user, Object request) throws IOException {
+        if (Server.clientsByID.containsKey(user)) {
+            Server.clientsByID.get(user).getObjectOutputStream().writeObject(request);
+            return true;
+        }
+
+        return false;
     }
 
     private String userNotFound(String user) {
